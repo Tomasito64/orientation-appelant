@@ -110,6 +110,10 @@ function computeReferent() {
     referentBox.textContent = "Complétez direction et thématique.";
     return;
   }
+  if (themeChoisie === "Handicap") {
+    referentBox.textContent = "Johanna Bézy-Dutaillis";
+    return;
+  }
   const entries = data.filter(row => row.direction === dir);
   const rec = entries.find(row => {
     if (row.debut === "Toutes" && row.fin === "Toutes") return true;
@@ -122,9 +126,7 @@ function computeReferent() {
   }
   const value = themeChoisie === "Action sociale"
     ? rec.action
-    : themeChoisie === "Logement"
-      ? rec.logement
-      : rec.handicap;
+    : rec.logement;
   const aliasMap = {
     "Marion Gilbert": "Marion Gilbert / Delphine Seguy"
   };
