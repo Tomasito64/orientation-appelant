@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="utf-8" />
@@ -22,49 +22,49 @@
   <h1>Orientation appelant</h1>
   <label for="direction">Direction</label>
   <select id="direction" required></select>
-  <label for="nom">Nom de l’appelant</label>
+  <label for="nom">Nom de lâ€™appelant</label>
   <input id="nom" type="text" placeholder="Ex : Dupont" />
-  <label>Thématique (une seule case)</label>
-  <div class="themes" role="group" aria-label="Thématiques">
+  <label>ThÃ©matique (une seule case)</label>
+  <div class="themes" role="group" aria-label="ThÃ©matiques">
     <button type="button" data-theme="Action sociale">Action sociale</button>
     <button type="button" data-theme="Logement">Logement</button>
     <button type="button" data-theme="Handicap">Handicap</button>
   </div>
-  <div class="helper">Une seule thématique cochée à la fois : un clic active, le clic suivant désactive.</div>
-  <label for="lettre">Première lettre</label>
+  <div class="helper">Une seule thÃ©matique cochÃ©e Ã  la fois : un clic active, le clic suivant dÃ©sactive.</div>
+  <label for="lettre">PremiÃ¨re lettre</label>
   <input id="lettre" type="text" readonly />
   <div class="result" id="referent">Choisissez les champs ci-dessus</div>
 </main>
 <script>
 const data = [
-  {direction:"Cabinet du Président", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"Marianne Rethore", handicap:"Johanna Bézy-Dutaillis"},
-  {direction:"Direction générale mobilités", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"", handicap:""},
-  {direction:"Direction générale transition écologique et ressources environnementales", debut:"A", fin:"B", action:"Marion Gilbert", logement:"", handicap:""},
-  {direction:"Direction générale transition écologique et ressources environnementales", debut:"C", fin:"D", action:"Hélène Fertin", logement:"", handicap:""},
-  {direction:"Direction générale transition écologique et ressources environnementales", debut:"E", fin:"K", action:"Elise Marquet", logement:"", handicap:""},
-  {direction:"Direction générale transition écologique et ressources environnementales", debut:"L", fin:"Q", action:"Annaelle Ognard", logement:"", handicap:""},
-  {direction:"Direction générale transition écologique et ressources environnementales", debut:"R", fin:"Z", action:"Sylvie Duthil", logement:"", handicap:""},
-  {direction:"Direction générale du développement économique", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""},
-  {direction:"Direction générale de l’aménagement", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"Marianne Rethore", handicap:"Johanna Bézy-Dutaillis"},
-  {direction:"Direction générale des finances et de la commande publique", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"", handicap:""},
-  {direction:"Direction générale numérique et systèmes d’information", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""},
-  {direction:"Direction générale RH et administration générale", debut:"Toutes", fin:"Toutes", action:"Elise Marquet", logement:"", handicap:""},
-  {direction:"Coordination", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""},
+  {direction:"Cabinet du PrÃ©sident", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"Marianne Rethore", handicap:"Johanna BÃ©zy-Dutaillis"},
+  {direction:"Direction gÃ©nÃ©rale mobilitÃ©s", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"", handicap:""},
+  {direction:"Direction gÃ©nÃ©rale transition Ã©cologique et ressources environnementales", debut:"A", fin:"B", action:"Marion Gilbert", logement:"", handicap:""},
+  {direction:"Direction gÃ©nÃ©rale transition Ã©cologique et ressources environnementales", debut:"C", fin:"D", action:"HÃ©lÃ¨ne Fertin", logement:"", handicap:""},
+  {direction:"Direction gÃ©nÃ©rale transition Ã©cologique et ressources environnementales", debut:"E", fin:"K", action:"Elise Marquet", logement:"", handicap:""},
+  {direction:"Direction gÃ©nÃ©rale transition Ã©cologique et ressources environnementales", debut:"L", fin:"Q", action:"Annaelle Ognard", logement:"", handicap:""},
+  {direction:"Direction gÃ©nÃ©rale transition Ã©cologique et ressources environnementales", debut:"R", fin:"Z", action:"Sylvie Duthil", logement:"", handicap:""},
+  {direction:"Direction gÃ©nÃ©rale du dÃ©veloppement Ã©conomique", debut:"Toutes", fin:"Toutes", action:"HÃ©lÃ¨ne Fertin", logement:"", handicap:""},
+  {direction:"Direction gÃ©nÃ©rale de lâ€™amÃ©nagement", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"Marianne Rethore", handicap:"Johanna BÃ©zy-Dutaillis"},
+  {direction:"Direction gÃ©nÃ©rale des finances et de la commande publique", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"", handicap:""},
+  {direction:"Direction gÃ©nÃ©rale numÃ©rique et systÃ¨mes dâ€™information", debut:"Toutes", fin:"Toutes", action:"HÃ©lÃ¨ne Fertin", logement:"", handicap:""},
+  {direction:"Direction gÃ©nÃ©rale RH et administration gÃ©nÃ©rale", debut:"Toutes", fin:"Toutes", action:"Elise Marquet", logement:"", handicap:""},
+  {direction:"Coordination", debut:"Toutes", fin:"Toutes", action:"HÃ©lÃ¨ne Fertin", logement:"", handicap:""},
   {direction:"PT Bordeaux", debut:"Toutes", fin:"Toutes", action:"Marion Gilbert", logement:"", handicap:""},
   {direction:"PT Ouest", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"", handicap:""},
-  {direction:"PT Rive Droite", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""},
+  {direction:"PT Rive Droite", debut:"Toutes", fin:"Toutes", action:"HÃ©lÃ¨ne Fertin", logement:"", handicap:""},
   {direction:"PT Sud", debut:"Toutes", fin:"Toutes", action:"Elise Marquet", logement:"", handicap:""},
-  {direction:"Cabinet du maire", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:"Johanna Bézy-Dutaillis"},
-  {direction:"Direction générale éducation, sports et société", debut:"A", fin:"C", action:"Marion Gilbert", logement:"", handicap:""},
-  {direction:"Direction générale éducation, sports et société", debut:"D", fin:"F", action:"Hélène Fertin", logement:"", handicap:""},
-  {direction:"Direction générale éducation, sports et société", debut:"G", fin:"L", action:"Elise Marquet", logement:"", handicap:""},
-  {direction:"Direction générale éducation, sports et société", debut:"M", fin:"P", action:"Annaelle Ognard", logement:"", handicap:""},
-  {direction:"Direction générale éducation, sports et société", debut:"Q", fin:"Z", action:"Sylvie Duthil", logement:"", handicap:""},
-  {direction:"Direction générale des affaires culturelles", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"", handicap:""},
+  {direction:"Cabinet du maire", debut:"Toutes", fin:"Toutes", action:"HÃ©lÃ¨ne Fertin", logement:"", handicap:"Johanna BÃ©zy-Dutaillis"},
+  {direction:"Direction gÃ©nÃ©rale Ã©ducation, sports et sociÃ©tÃ©", debut:"A", fin:"C", action:"Marion Gilbert", logement:"", handicap:""},
+  {direction:"Direction gÃ©nÃ©rale Ã©ducation, sports et sociÃ©tÃ©", debut:"D", fin:"F", action:"HÃ©lÃ¨ne Fertin", logement:"", handicap:""},
+  {direction:"Direction gÃ©nÃ©rale Ã©ducation, sports et sociÃ©tÃ©", debut:"G", fin:"L", action:"Elise Marquet", logement:"", handicap:""},
+  {direction:"Direction gÃ©nÃ©rale Ã©ducation, sports et sociÃ©tÃ©", debut:"M", fin:"P", action:"Annaelle Ognard", logement:"", handicap:""},
+  {direction:"Direction gÃ©nÃ©rale Ã©ducation, sports et sociÃ©tÃ©", debut:"Q", fin:"Z", action:"Sylvie Duthil", logement:"", handicap:""},
+  {direction:"Direction gÃ©nÃ©rale des affaires culturelles", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"", handicap:""},
   {direction:"Ecole des Beaux-Arts", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"", handicap:""},
-  {direction:"Direction générale de la proximité et des relations avec la population", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"", handicap:""},
+  {direction:"Direction gÃ©nÃ©rale de la proximitÃ© et des relations avec la population", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"", handicap:""},
   {direction:"CCAS", debut:"Toutes", fin:"Toutes", action:"Marion Gilbert", logement:"", handicap:""},
-  {direction:"Direction générale des solidarités et de la citoyenneté", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""}
+  {direction:"Direction gÃ©nÃ©rale des solidaritÃ©s et de la citoyennetÃ©", debut:"Toutes", fin:"Toutes", action:"HÃ©lÃ¨ne Fertin", logement:"", handicap:""}
 ];
 
 const select = document.getElementById("direction");
@@ -107,7 +107,7 @@ function computeReferent() {
   const dir = select.value;
   const lettre = letterInput.value || "Toutes";
   if (!dir || !themeChoisie) {
-    referentBox.textContent = "Complétez direction et thématique.";
+    referentBox.textContent = "ComplÃ©tez direction et thÃ©matique.";
     return;
   }
   const entries = data.filter(row => row.direction === dir);
@@ -117,7 +117,7 @@ function computeReferent() {
     return lettre >= row.debut && lettre <= row.fin;
   });
   if (!rec) {
-    referentBox.textContent = "Pas de référent pour cette combinaison.";
+    referentBox.textContent = "Pas de rÃ©fÃ©rent pour cette combinaison.";
     return;
   }
   const value = themeChoisie === "Action sociale"
@@ -125,7 +125,7 @@ function computeReferent() {
     : themeChoisie === "Logement"
       ? rec.logement
       : rec.handicap;
-  referentBox.textContent = value || "Référent non renseigné.";
+  referentBox.textContent = value || "RÃ©fÃ©rent non renseignÃ©.";
 }
 </script>
 </body>
