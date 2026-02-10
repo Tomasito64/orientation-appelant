@@ -110,6 +110,15 @@ function computeReferent() {
     referentBox.textContent = "Complétez direction et thématique.";
     return;
   }
+  const logementExceptions = new Set([
+    "Cabinet du maire",
+    "Direction générale éducation, sports et société",
+    "Direction générale des affaires culturelles",
+    "Ecole des Beaux-Arts",
+    "Opéra de Bordeaux",
+    "Direction générale de la proximité et des relations avec la population",
+    "Direction générale des solidarités et de la citoyenneté"
+  ]);
   if (themeChoisie === "Handicap") {
     referentBox.textContent = "Johanna Bézy-Dutaillis";
     return;
@@ -124,9 +133,16 @@ function computeReferent() {
     referentBox.textContent = "Pas de référent pour cette combinaison.";
     return;
   }
-  const value = themeChoisie === "Action sociale"
-    ? rec.action
-    : rec.logement;
+  let value;
+  if (themeChoisie === "Action sociale") {
+    value = rec.action;
+  } else {
+    if (logementExceptions.has(dir)) {
+      referentBox.textContent = "Pas d'interlocuteur";
+      return;
+    }
+    value = "Marianne Rethore";
+  }
   const aliasMap = {
     "Marion Gilbert": "Marion Gilbert / Delphine Seguy"
   };
