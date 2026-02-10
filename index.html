@@ -41,6 +41,9 @@
 <script>
 const data = [
   {direction:"Cabinet du Président", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"Marianne Rethore", handicap:"Johanna Bézy-Dutaillis"},
+  {direction:"Inspection générale des services", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"", handicap:""},
+  {direction:"Direction générale des services", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"", handicap:""},
+  {direction:"Secrétariat général", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"", handicap:""},
   {direction:"Direction générale mobilités", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"", handicap:""},
   {direction:"Direction générale transition écologique et ressources environnementales", debut:"A", fin:"B", action:"Marion Gilbert", logement:"", handicap:""},
   {direction:"Direction générale transition écologique et ressources environnementales", debut:"C", fin:"D", action:"Hélène Fertin", logement:"", handicap:""},
@@ -52,7 +55,7 @@ const data = [
   {direction:"Direction générale des finances et de la commande publique", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"", handicap:""},
   {direction:"Direction générale numérique et systèmes d’information", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""},
   {direction:"Direction générale RH et administration générale", debut:"Toutes", fin:"Toutes", action:"Elise Marquet", logement:"", handicap:""},
-  {direction:"Coordination", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""},
+  {direction:"Coordination DGT", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""},
   {direction:"PT Bordeaux", debut:"Toutes", fin:"Toutes", action:"Marion Gilbert", logement:"", handicap:""},
   {direction:"PT Ouest", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"", handicap:""},
   {direction:"PT Rive Droite", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""},
@@ -86,7 +89,10 @@ const mairieDirections = new Set([
   "Opéra de Bordeaux",
   "Direction générale de la proximité et des relations avec la population",
   "Direction générale des solidarités et de la citoyenneté",
-  "CCAS"
+  "CCAS",
+  "Inspection générale des services",
+  "Direction générale des services",
+  "Secrétariat général"
 ]);
 const logementExceptions = new Set([
   "Cabinet du maire",
