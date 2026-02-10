@@ -109,7 +109,8 @@ select.appendChild(placeholder);
 directions.forEach(dir => {
   const opt = document.createElement("option");
   opt.value = dir;
-  opt.textContent = dir;
+  const prefix = mairieDirections.has(dir) ? "🟠 MAIRIE" : "🔵 MÉTRO";
+  opt.textContent = `${prefix} — ${dir}`;
   opt.dataset.entity = mairieDirections.has(dir) ? "mairie" : "metropole";
   select.appendChild(opt);
 });
