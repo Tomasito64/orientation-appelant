@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Orientation appelant</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  body {font-family: "Segoe UI", system-ui, sans-serif; background:#f6f7fb; color:#252525; margin:0; padding:1rem;}
+  .card {max-width:640px;margin:0 auto;background:#fff;border-radius:12px;box-shadow:0 12px 28px rgba(15,23,42,.15);padding:2rem;}
+  h1 {margin-top:0;font-size:1.7rem;color:#0f172a;}
+  label {display:block;font-weight:600;margin-bottom:.35rem;}
+  select,input[type="text"] {width:100%;padding:.55rem .7rem;border:1px solid #d1d5db;border-radius:6px;font-size:1rem;background:#fff;}
+  .themes {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;margin-bottom:1rem;}
+  .themes button {padding:.65rem .5rem;border:1px solid #cbd5f5;border-radius:8px;background:#eef2ff;color:#1d4ed8;font-weight:600;cursor:pointer;transition:.15s;}
+  .themes button.active {background:#1d4ed8;color:#fff;border-color:#1d4ed8;box-shadow:0 8px 18px rgba(59,130,246,.2);}
+  .result {margin-top:1.2rem;padding:1.2rem;border-radius:12px;background:#fef3c7;color:#92400e;font-size:1.15rem;font-weight:700;text-align:center;min-height:3rem;display:flex;align-items:center;justify-content:center;border:1px dashed #f59e0b;}
+  .helper {font-size:.9rem;color:#475569;margin-top:.25rem;}
+</style>
+</head>
+<body>
+<main class="card">
+  <h1>Orientation appelant</h1>
+  <label for="direction">Direction</label>
+  <select id="direction" required></select>
+  <label for="nom">Nom de l’appelant</label>
+  <input id="nom" type="text" placeholder="Ex : Dupont" />
+  <label>Thématique (une seule case)</label>
+  <div class="themes" role="group" aria-label="Thématiques">
+    <button type="button" data-theme="Action sociale">Action sociale</button>
+    <button type="button" data-theme="Logement">Logement</button>
+    <button type="button" data-theme="Handicap">Handicap</button>
+  </div>
+  <div class="helper">Une seule thématique cochée à la fois : un clic active, le clic suivant désactive.</div>
+  <label for="lettre">Première lettre</label>
+  <input id="lettre" type="text" readonly />
+  <div class="result" id="referent">Choisissez les champs ci-dessus</div>
+</main>
+<script>
+const data = [
+  {direction:"Cabinet du Président", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"Marianne Rethore", handicap:"Johanna Bézy-Dutaillis"},
+  {direction:"Direction générale mobilités", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"", handicap:""},
+  {direction:"Direction générale transition écologique et ressources environnementales", debut:"A", fin:"B", action:"Marion Gilbert", logement:"", handicap:""},
+  {direction:"Direction générale transition écologique et ressources environnementales", debut:"C", fin:"D", action:"Hélène Fertin", logement:"", handicap:""},
+  {direction:"Direction générale transition écologique et ressources environnementales", debut:"E", fin:"K", action:"Elise Marquet", logement:"", handicap:""},
+  {direction:"Direction générale transition écologique et ressources environnementales", debut:"L", fin:"Q", action:"Annaelle Ognard", logement:"", handicap:""},
+  {direction:"Direction générale transition écologique et ressources environnementales", debut:"R", fin:"Z", action:"Sylvie Duthil", logement:"", handicap:""},
+  {direction:"Direction générale du développement économique", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""},
+  {direction:"Direction générale de l’aménagement", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"Marianne Rethore", handicap:"Johanna Bézy-Dutaillis"},
+  {direction:"Direction générale des finances et de la commande publique", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"", handicap:""},
+  {direction:"Direction générale numérique et systèmes d’information", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""},
+  {direction:"Direction générale RH et administration générale", debut:"Toutes", fin:"Toutes", action:"Elise Marquet", logement:"", handicap:""},
+  {direction:"Coordination", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""},
+  {direction:"PT Bordeaux", debut:"Toutes", fin:"Toutes", action:"Marion Gilbert", logement:"", handicap:""},
+  {direction:"PT Ouest", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"", handicap:""},
+  {direction:"PT Rive Droite", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""},
+  {direction:"PT Sud", debut:"Toutes", fin:"Toutes", action:"Elise Marquet", logement:"", handicap:""},
+  {direction:"Cabinet du maire", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:"Johanna Bézy-Dutaillis"},
+  {direction:"Direction générale éducation, sports et société", debut:"A", fin:"C", action:"Marion Gilbert", logement:"", handicap:""},
+  {direction:"Direction générale éducation, sports et société", debut:"D", fin:"F", action:"Hélène Fertin", logement:"", handicap:""},
+  {direction:"Direction générale éducation, sports et société", debut:"G", fin:"L", action:"Elise Marquet", logement:"", handicap:""},
+  {direction:"Direction générale éducation, sports et société", debut:"M", fin:"P", action:"Annaelle Ognard", logement:"", handicap:""},
+  {direction:"Direction générale éducation, sports et société", debut:"Q", fin:"Z", action:"Sylvie Duthil", logement:"", handicap:""},
+  {direction:"Direction générale des affaires culturelles", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"", handicap:""},
+  {direction:"Ecole des Beaux-Arts", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"", handicap:""},
+  {direction:"Direction générale de la proximité et des relations avec la population", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"", handicap:""},
+  {direction:"CCAS", debut:"Toutes", fin:"Toutes", action:"Marion Gilbert", logement:"", handicap:""},
+  {direction:"Direction générale des solidarités et de la citoyenneté", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""}
+];
+
+const select = document.getElementById("direction");
+const letterInput = document.getElementById("lettre");
+const referentBox = document.getElementById("referent");
+const nameInput = document.getElementById("nom");
+const themeButtons = document.querySelectorAll(".themes button");
+let themeChoisie = "";
+
+const directions = [...new Set(data.map(r => r.direction))];
+directions.forEach(dir => {
+  const opt = document.createElement("option");
+  opt.value = dir;
+  opt.textContent = dir;
+  select.appendChild(opt);
+});
+
+themeButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    themeButtons.forEach(b => b.classList.remove("active"));
+    if (themeChoisie === btn.dataset.theme) {
+      themeChoisie = "";
+      btn.classList.remove("active");
+    } else {
+      btn.classList.add("active");
+      themeChoisie = btn.dataset.theme;
+    }
+    computeReferent();
+  });
+});
+
+[nameInput, select].forEach(el => el.addEventListener("input", computeReferent));
+nameInput.addEventListener("input", () => {
+  const nom = nameInput.value.trim();
+  letterInput.value = nom ? nom[0].toUpperCase() : "";
+  computeReferent();
+});
+
+function computeReferent() {
+  const dir = select.value;
+  const lettre = letterInput.value || "Toutes";
+  if (!dir || !themeChoisie) {
+    referentBox.textContent = "Complétez direction et thématique.";
+    return;
+  }
+  const entries = data.filter(row => row.direction === dir);
+  const rec = entries.find(row => {
+    if (row.debut === "Toutes" && row.fin === "Toutes") return true;
+    if (lettre === "Toutes") return false;
+    return lettre >= row.debut && lettre <= row.fin;
+  });
+  if (!rec) {
+    referentBox.textContent = "Pas de référent pour cette combinaison.";
+    return;
+  }
+  const value = themeChoisie === "Action sociale"
+    ? rec.action
+    : themeChoisie === "Logement"
+      ? rec.logement
+      : rec.handicap;
+  referentBox.textContent = value || "Référent non renseigné.";
+}
+</script>
+</body>
+</html>
