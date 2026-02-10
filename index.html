@@ -125,7 +125,11 @@ function computeReferent() {
     : themeChoisie === "Logement"
       ? rec.logement
       : rec.handicap;
-  referentBox.textContent = value || "Référent non renseigné.";
+  const aliasMap = {
+    "Marion Gilbert": "Marion Gilbert / Delphine Seguy"
+  };
+  const displayed = value && aliasMap[value] ? aliasMap[value] : value;
+  referentBox.textContent = displayed || "Référent non renseigné.";
 }
 </script>
 </body>
