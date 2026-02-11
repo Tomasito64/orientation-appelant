@@ -65,7 +65,10 @@
 </main>
 <script>
 // =============================================
-// Data definitions
+// Données statiques qui décrivent les référents disponibles.
+// Chaque objet représente une direction, une plage de lettres et les noms de référents pour chaque thématique.
+// Les champs `debut` et `fin` permettent de trouver le bon référent selon la première lettre du nom.
+// Les champs `logement` et `handicap` restent vides ici car la logique décide qui afficher (exceptions, règles spécifiques).
 // =============================================
 const data = [
   {direction:"Cabinet du Président", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"Emilie Roussel", handicap:"Johanna Bézy-Dutaillis"},
@@ -102,7 +105,7 @@ const data = [
 ];
 
 // =============================================
-// DOM references and helpers
+// Eléments du DOM que nous contrôlons et aides visuelles statiques.
 // =============================================
 const select = document.getElementById("direction");
 const letterInput = document.getElementById("lettre");
@@ -134,7 +137,8 @@ const logementExceptions = new Set([
 
 
 // =============================================
-// Direction selector population
+// Construire dynamiquement la liste des directions dans le <select>.
+// On ajoute un préfixe visuel pour distinguer services mairie / métropole.
 // =============================================
 const directions = [...new Set(data.map(r => r.direction))];
   const placeholder = document.createElement("option");
@@ -152,11 +156,11 @@ directions.forEach(dir => {
   select.appendChild(opt);
 });
 
-// Apply initial state cue
+// Appliquer le style initial pour indiquer mairie/métropole et brancher le changement
 updateDirectionStyle("");
 select.addEventListener("change", () => updateDirectionStyle(select.value));
 
-// Toggle colors/text indicator when direction changes
+// Cette fonction change la classe du <select> et le texte d'aide situé sous la liste pour guider l'utilisateur.
 function updateDirectionStyle(selectedDir) {
   const type = mairieDirections.has(selectedDir) ? "mairie" : "metropole";
   select.classList.remove("mairie", "metropole");
@@ -169,6 +173,7 @@ function updateDirectionStyle(selectedDir) {
 updateDirectionStyle("");
 select.addEventListener("change", () => updateDirectionStyle(select.value));
 
+// Gérer le comportement des boutons thématiques (une seule thématique active à la fois).
 themeButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     themeButtons.forEach(b => b.classList.remove("active"));
@@ -183,6 +188,7 @@ themeButtons.forEach(btn => {
   });
 });
 
+// Réagir aux changements de direction ou au nom de l'appelant.
 [nameInput, select].forEach(el => el.addEventListener("input", computeReferent));
 nameInput.addEventListener("input", () => {
   const nom = nameInput.value.trim();
@@ -191,7 +197,8 @@ nameInput.addEventListener("input", () => {
 });
 
 // =============================================
-// Core logic
+// Fonction principale : détermine quel référent afficher.
+// Elle tient compte de la direction choisie, de la thématique et de la première lettre du nom.
 // =============================================
 function computeReferent() {
   const dir = select.value;
@@ -202,7 +209,7 @@ function computeReferent() {
   }
   let value;
   if (themeChoisie === "Handicap") {
-    value = "Johanna Bézy-Dutaillis";
+    value = "Johanna Bézy-Dutaillis"; // règle globale : toujours Johanna pour le handicap
   } else {
     const entries = data.filter(row => row.direction === dir);
     const rec = entries.find(row => {
@@ -224,7 +231,7 @@ function computeReferent() {
       value = "Emilie Roussel";
     }
   }
-  // Mailto data
+  // Données pour générer le lien mailto : local part + domaine.
   const emailDomain = "bordeaux-metropole.fr";
   const emailLocal = {
     "Johanna Bézy-Dutaillis": "j.bezy",
@@ -235,6 +242,7 @@ function computeReferent() {
     "Delphine Seguy": "de.seguy",
     "Emilie Roussel": "e.roussel"
   };
+  // Certains référents partagent l'affichage (Marion + Delphine) mais on doit garder l'email de Delphine.
   const aliasMap = {
     "Marion Gilbert": {label: "Marion Gilbert / Delphine Seguy", emailKey: "Delphine Seguy"}
   };
@@ -250,6 +258,7 @@ function computeReferent() {
   }
   const emailLocalPart = emailLocal[emailKey];
   if (emailLocalPart) {
+    // Le bloc affiché met en avant le nom puis l'e-mail cliquable (ouvert dans Outlook si configuré).
     referentBox.innerHTML = `<span class="referent-name">${displayed}</span><div class="referent-email"><a href="mailto:${emailLocalPart}@${emailDomain}">${emailLocalPart}@${emailDomain}</a></div>`;
   } else {
     referentBox.innerHTML = `<span class="referent-name">${displayed}</span>`;
