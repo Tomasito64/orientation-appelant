@@ -24,5 +24,14 @@ Petite interface web statique qui remplace l’usage Excel : elle permet de choi
 - Entre un nom dont la première lettre correspond à la plage alphabétique attendue et choisis la thématique adéquate.
 - Assure-toi que la zone résultat affiche bien le référent correspondant ou affiche un message si la combinaison n’existe pas.
 
+## Tester en local
+1. Depuis la branche `V2`, ouvre `index.html` dans ton navigateur (double-clic suffit) pour un premier test rapide.
+2. Pour simuler un serveur et éviter les limitations de certains navigateurs, lance :
+   ```sh
+   python -m http.server 8000
+   ```
+   depuis `C:\Users\thoma\AccTS` puis visite `http://localhost:8000/index.html`. Arrête le serveur avec `Ctrl+C` quand tu as terminé.
+3. Tant que tu restes sur `V2`, aucun changement ne touche la version GitHub Pages déployée sur `main` : tu peux modifier, tester et valider ici avant de merger.
+
 ## Avancement et nettoyage
 Les scripts Python et fichiers intermédiaires (`AccTS.xlsx`, `extract*.py`, `pdf_text*.txt`, etc.) servent à vérifier la source PDF mais ne sont pas nécessaires pour la page web finale : ajoute-les à `.gitignore` ou supprime-les pour garder le dépôt léger.
