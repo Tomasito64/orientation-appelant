@@ -68,7 +68,7 @@
 // Data definitions
 // =============================================
 const data = [
-  {direction:"Cabinet du Président", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"Marianne Rethore", handicap:"Johanna Bézy-Dutaillis"},
+  {direction:"Cabinet du Président", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"Emilie Roussel", handicap:"Johanna Bézy-Dutaillis"},
   {direction:"Inspection générale des services", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"", handicap:""},
   {direction:"Direction générale des services", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"", handicap:""},
   {direction:"Secrétariat général", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"", handicap:""},
@@ -79,7 +79,7 @@ const data = [
   {direction:"Direction générale transition écologique et ressources environnementales", debut:"L", fin:"Q", action:"Annaelle Ognard", logement:"", handicap:""},
   {direction:"Direction générale transition écologique et ressources environnementales", debut:"R", fin:"Z", action:"Sylvie Duthil", logement:"", handicap:""},
   {direction:"Direction générale du développement économique", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""},
-  {direction:"Direction générale de l’aménagement", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"Marianne Rethore", handicap:"Johanna Bézy-Dutaillis"},
+  {direction:"Direction générale de l’aménagement", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"Emilie Roussel", handicap:"Johanna Bézy-Dutaillis"},
   {direction:"Direction générale des finances et de la commande publique", debut:"Toutes", fin:"Toutes", action:"Annaelle Ognard", logement:"", handicap:""},
   {direction:"Direction générale numérique et systèmes d’information", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""},
   {direction:"Direction générale RH et administration générale", debut:"Toutes", fin:"Toutes", action:"Elise Marquet", logement:"", handicap:""},
@@ -215,14 +215,14 @@ function computeReferent() {
     return;
   }
   let value;
-  if (themeChoisie === "Action sociale") {
-    value = rec.action;
-  } else {
+    if (themeChoisie === "Action sociale") {
+      value = rec.action;
+    } else {
     if (logementExceptions.has(dir)) {
       referentBox.textContent = "Pas d'interlocuteur";
       return;
     }
-    value = "Marianne Rethore";
+    value = "Emilie Roussel";
   }
   // Mailto data
   const emailDomain = "bordeaux-metropole.fr";
@@ -233,7 +233,7 @@ function computeReferent() {
     "Elise Marquet": "e.marquet",
     "Annaelle Ognard": "an.ognard",
     "Delphine Seguy": "de.seguy",
-    "Marianne Rethore": "ma.rethore"
+    "Emilie Roussel": "e.roussel"
   };
   const aliasMap = {
     "Marion Gilbert": {label: "Marion Gilbert / Delphine Seguy", emailKey: "Delphine Seguy"}
