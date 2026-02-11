@@ -18,6 +18,9 @@
   .notes {margin-top:1rem;padding:1rem;border-radius:10px;background:#ecfdf3;border:1px solid #34d399;box-shadow:0 6px 15px rgba(16,185,129,.15);}
   .notes-title {font-weight:600;margin:0 0 .35rem;color:#065f46;font-size:1rem;}
   .notes ul {margin:0;padding-left:1.1rem;color:#0f766e;line-height:1.5;}
+  .referent-email {margin-top:.4rem;font-size:.95rem;color:#0f172a;}
+  .referent-email a {color:#0066cc;text-decoration:none;font-weight:600;}
+  .referent-email a:hover {text-decoration:underline;}
   select.metropole {background:linear-gradient(#fff,#eaf2ff);}
   select.mairie {background:linear-gradient(#fff,#fff4e1);}
 </style>
@@ -194,11 +197,34 @@ function computeReferent() {
     }
     value = "Marianne Rethore";
   }
-  const aliasMap = {
-    "Marion Gilbert": "Marion Gilbert / Delphine Seguy"
+  const emailDomain = "bordeaux-metropole.fr";
+  const emailLocal = {
+    "Johanna Bézy-Dutaillis": "j.bezy",
+    "Sylvie Duthil": "sy.duthil",
+    "Hélène Fertin": "h.karbila",
+    "Elise Marquet": "e.marquet",
+    "Annaelle Ognard": "an.ognard",
+    "Delphine Seguy": "de.seguy"
   };
-  const displayed = value && aliasMap[value] ? aliasMap[value] : value;
-  referentBox.textContent = displayed || "Référent non renseigné.";
+  const aliasMap = {
+    "Marion Gilbert": {label: "Marion Gilbert / Delphine Seguy", emailKey: "Delphine Seguy"}
+  };
+  let displayed = value;
+  let emailKey = value;
+  if (aliasMap[value]) {
+    displayed = aliasMap[value].label;
+    emailKey = aliasMap[value].emailKey;
+  }
+  if (!displayed) {
+    referentBox.textContent = "Référent non renseigné.";
+    return;
+  }
+  const emailLocalPart = emailLocal[emailKey];
+  if (emailLocalPart) {
+    referentBox.innerHTML = `${displayed}<div class="referent-email"><a href="mailto:${emailLocalPart}@${emailDomain}">${emailLocalPart}@${emailDomain}</a></div>`;
+  } else {
+    referentBox.textContent = displayed;
+  }
 }
 </script>
 </body>
