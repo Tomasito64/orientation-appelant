@@ -15,6 +15,9 @@
   .themes button.active {background:#1d4ed8;color:#fff;border-color:#1d4ed8;box-shadow:0 8px 18px rgba(59,130,246,.2);}
   .result {margin-top:1.2rem;padding:1.2rem;border-radius:12px;background:#fef3c7;color:#92400e;font-size:1.15rem;font-weight:700;text-align:center;min-height:3rem;display:flex;align-items:center;justify-content:center;border:1px dashed #f59e0b;}
   .helper {font-size:.9rem;color:#475569;margin-top:.25rem;}
+  .notes {margin-top:1rem;padding:1rem;border-radius:10px;background:#ecfdf3;border:1px solid #34d399;box-shadow:0 6px 15px rgba(16,185,129,.15);}
+  .notes-title {font-weight:600;margin:0 0 .35rem;color:#065f46;font-size:1rem;}
+  .notes ul {margin:0;padding-left:1.1rem;color:#0f766e;line-height:1.5;}
   select.metropole {background:linear-gradient(#fff,#eaf2ff);}
   select.mairie {background:linear-gradient(#fff,#fff4e1);}
 </style>
@@ -37,6 +40,15 @@
   <label for="lettre">Première lettre</label>
   <input id="lettre" type="text" readonly />
   <div class="result" id="referent">Choisissez les champs ci-dessus</div>
+  <div class="notes">
+    <p class="notes-title">Pense-bête réception</p>
+    <ul>
+      <li>Nom</li>
+      <li>Téléphone</li>
+      <li>Objet principal de l’appel</li>
+      <li>Date et heure de la réception du message</li>
+    </ul>
+  </div>
 </main>
 <script>
 const data = [
