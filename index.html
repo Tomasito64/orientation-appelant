@@ -5,25 +5,34 @@
 <title>Orientation appelant</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <style>
+  /* Layout & typography */
   body {font-family: "Segoe UI", system-ui, sans-serif; background:#f6f7fb; color:#252525; margin:0; padding:1rem;}
   .card {max-width:640px;margin:0 auto;background:#fff;border-radius:12px;box-shadow:0 12px 28px rgba(15,23,42,.15);padding:2rem;}
   h1 {margin-top:0;font-size:1.7rem;color:#0f172a;}
   label {display:block;font-weight:600;margin-bottom:.35rem;}
   select,input[type="text"] {width:100%;padding:.55rem .7rem;border:1px solid #d1d5db;border-radius:6px;font-size:1rem;background:#fff;}
+
+  /* Thématique */
   .themes {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;margin-bottom:1rem;}
   .themes button {padding:.65rem .5rem;border:1px solid #cbd5f5;border-radius:8px;background:#eef2ff;color:#1d4ed8;font-weight:600;cursor:pointer;transition:.15s;}
   .themes button.active {background:#1d4ed8;color:#fff;border-color:#1d4ed8;box-shadow:0 8px 18px rgba(59,130,246,.2);}
+
+  /* Référent */
   .result {margin-top:1.2rem;padding:1.2rem;border-radius:12px;background:#fef3c7;color:#92400e;font-size:1.15rem;font-weight:700;text-align:center;min-height:3rem;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px dashed #f59e0b;}
-  .helper {font-size:.9rem;color:#475569;margin-top:.25rem;}
-  .notes {margin-top:1rem;padding:1rem;border-radius:10px;background:#ecfdf3;border:1px solid #34d399;box-shadow:0 6px 15px rgba(16,185,129,.15);}
-  .notes-title {font-weight:600;margin:0 0 .35rem;color:#065f46;font-size:1rem;}
-  .notes ul {margin:0;padding-left:1.1rem;color:#0f766e;line-height:1.5;}
   .referent-name {display:block;font-size:1.2rem;margin-bottom:.35rem;}
   .referent-email {font-size:.95rem;color:#0f172a;}
   .referent-email a {color:#0066cc;text-decoration:none;font-weight:600;}
   .referent-email a:hover {text-decoration:underline;}
-  select.metropole {background:linear-gradient(#fff,#eaf2ff);}
-  select.mairie {background:linear-gradient(#fff,#fff4e1);}
+
+  /* Astuce */
+  .helper {font-size:.9rem;color:#475569;margin-top:.25rem;}
+  .notes {margin-top:1rem;padding:1rem;border-radius:10px;background:#ecfdf3;border:1px solid #34d399;box-shadow:0 6px 15px rgba(16,185,129,.15);}
+  .notes-title {font-weight:600;margin:0 0 .35rem;color:#065f46;font-size:1rem;}
+  .notes ul {margin:0;padding-left:1.1rem;color:#0f766e;line-height:1.5;}
+
+  /* Indicateur mairie/métropole */
+  select.metropole {background:linear-gradient(#f8fbff,#d5e3ff);border-color:#90abff;color:#0f172a;box-shadow:0 8px 12px rgba(96,165,250,.25);}
+  select.mairie {background:linear-gradient(#fff8f1,#ffecd5);border-color:#f97316;color:#0f172a;box-shadow:0 8px 12px rgba(251,146,60,.25);}
 </style>
 </head>
 <body>
@@ -55,6 +64,9 @@
   </div>
 </main>
 <script>
+// =============================================
+// Data definitions
+// =============================================
 const data = [
   {direction:"Cabinet du Président", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"Marianne Rethore", handicap:"Johanna Bézy-Dutaillis"},
   {direction:"Inspection générale des services", debut:"Toutes", fin:"Toutes", action:"Sylvie Duthil", logement:"", handicap:""},
@@ -89,6 +101,9 @@ const data = [
   {direction:"Direction générale des solidarités et de la citoyenneté", debut:"Toutes", fin:"Toutes", action:"Hélène Fertin", logement:"", handicap:""}
 ];
 
+// =============================================
+// DOM references and helpers
+// =============================================
 const select = document.getElementById("direction");
 const letterInput = document.getElementById("lettre");
 const referentBox = document.getElementById("referent");
@@ -118,13 +133,16 @@ const logementExceptions = new Set([
 ]);
 
 
+// =============================================
+// Direction selector population
+// =============================================
 const directions = [...new Set(data.map(r => r.direction))];
-const placeholder = document.createElement("option");
-placeholder.value = "";
-placeholder.textContent = "Choisir une direction";
-placeholder.disabled = true;
-placeholder.selected = true;
-select.appendChild(placeholder);
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = "Choisir une direction";
+  placeholder.disabled = true;
+  placeholder.selected = true;
+  select.appendChild(placeholder);
 directions.forEach(dir => {
   const opt = document.createElement("option");
   opt.value = dir;
@@ -134,6 +152,11 @@ directions.forEach(dir => {
   select.appendChild(opt);
 });
 
+// Apply initial state cue
+updateDirectionStyle("");
+select.addEventListener("change", () => updateDirectionStyle(select.value));
+
+// Toggle colors/text indicator when direction changes
 function updateDirectionStyle(selectedDir) {
   const type = mairieDirections.has(selectedDir) ? "mairie" : "metropole";
   select.classList.remove("mairie", "metropole");
@@ -167,6 +190,9 @@ nameInput.addEventListener("input", () => {
   computeReferent();
 });
 
+// =============================================
+// Core logic
+// =============================================
 function computeReferent() {
   const dir = select.value;
   const lettre = letterInput.value || "Toutes";
@@ -198,6 +224,7 @@ function computeReferent() {
     }
     value = "Marianne Rethore";
   }
+  // Mailto data
   const emailDomain = "bordeaux-metropole.fr";
   const emailLocal = {
     "Johanna Bézy-Dutaillis": "j.bezy",
