@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="utf-8" />
@@ -236,15 +236,16 @@ function computeReferent() {
   const emailLocal = {
     "Johanna Bézy-Dutaillis": "j.bezy",
     "Sylvie Duthil": "sy.duthil",
+    "Marion Gilbert": "m.gilbert",
     "Hélène Fertin": "h.fertin",
     "Elise Marquet": "e.marquet",
     "Annaelle Ognard": "an.ognard",
     "Delphine Seguy": "de.seguy",
     "Emilie Roussel": "e.roussel"
   };
-  // Certains référents partagent l'affichage (Marion + Delphine) mais on doit garder l'email de Delphine.
+  // Delphine Seguy remplace Sylvie Duthil : afficher les deux noms et contacter Delphine.
   const aliasMap = {
-    "Marion Gilbert": {label: "Marion Gilbert / Delphine Seguy", emailKey: "Delphine Seguy"}
+    "Sylvie Duthil": {label: "Sylvie Duthil / Delphine Seguy", emailKey: "Delphine Seguy"}
   };
   let displayed = value;
   let emailKey = value;
